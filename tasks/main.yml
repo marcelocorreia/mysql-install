@@ -28,7 +28,7 @@
   sudo: yes
   tags: consul
   template:
-    src="./templates/mysql-consul.json.j2"
+    src="../templates/mysql-consul.json.j2"
     dest="/etc/consul.d/mysql.json"
     owner=consul
     group=consul
