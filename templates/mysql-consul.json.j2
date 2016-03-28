@@ -1,0 +1,14 @@
+{
+  "service": {
+    "name": "mysql",
+    "port": {{ mysql.mysql_port }},
+    "enableTagOverride": false,
+    "checks": [
+      {
+        "interval": "10s",
+        "tcp":"localhost:{{ mysql.mysql_port }}",
+        "timeout":"1s"
+      }
+    ]
+  }
+}
