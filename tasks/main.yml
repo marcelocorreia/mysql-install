@@ -1,0 +1,60 @@
+---
+- name: Add mysql user
+  sudo: yes
+  mysql_user:
+    name={{ mysql.db_user }}
+    password={{ mysql.db_password }}
+    priv=*.*:ALL,GRANT
+    state=present
+    host="%"
+
+- name: Ensures database exists
+  mysql_db:
+    name="{{ mysql.db_name }}"
+    state="present"
+
+- name: Update mysql config
+  sudo: yes
+  template:
+    src="my.cnf.j2"
+    dest="/etc/mysql/my.cnf"
+    mode="644"
+
+- name: Restart mysql
+  sudo: yes
+  service: name=mysql state=restarted
+
+- name: Add MySQL as consul service
+  sudo: yes
+  tags: consul
+  template:
+    src="./templates/mysql-consul.json.j2"
+    dest="/etc/consul.d/mysql.json"
+    owner=consul
+    group=consul
+- name: Reload Consul
+  tags: consul
+  sudo: yes
+  service:
+    name=consul
+    state=restarted
+- name: Reload DNSMasq
+  sudo: yes
+  service:
+    name=dnsmasq
+    state=restarted
+- name: Stop dns-clean
+  sudo: yes
+  service:
+    name=dns-clean
+    state=stopped
+- name: Start dns-clean
+  sudo: yes
+  service:
+    name=dns-clean
+    state=started
+- name: Reload NGINX
+  sudo: yes
+  service:
+    name=nginx
+    state=restarted

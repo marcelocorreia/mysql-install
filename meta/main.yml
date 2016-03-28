@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Marcelo Correia
+  company: Correia
+  description: "MySQL installer"
+  min_ansible_version: 1.4
+  license: MIT
+  platforms:
+  - name: MacOS
+    versions:
+    - all
+  categories:
+  - database
+
+dependencies: []

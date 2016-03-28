@@ -1,0 +1,5 @@
+---
+mysql:
+  db_user: sonar
+  db_password: sonar
+  my_cnf_template: my.cnf.j2
